@@ -11860,7 +11860,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[285]:</div>
+<div class="prompt input_prompt">In&nbsp;[357]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Replace each question mark with the appropriate value. </span>
@@ -11876,10 +11876,10 @@ div#notebook {
 <span class="n">n_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># TODO: What&#39;s the shape of an traffic sign image?</span>
-<span class="n">image_shape</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">&#39;sizes&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">image_shape</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
 
 <span class="c1"># TODO: How many unique classes/labels there are in the dataset.</span>
-<span class="n">n_classes</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of training examples =&quot;</span><span class="p">,</span> <span class="n">n_train</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of validation examples =&quot;</span><span class="p">,</span> <span class="n">n_validation</span><span class="p">)</span>
@@ -11903,8 +11903,8 @@ div#notebook {
 <pre>Number of training examples = 34799
 Number of validation examples = 4410
 Number of testing examples = 12630
-Image data shape = [26 25]
-Number of classes = 12630
+Image data shape = (32, 32, 3)
+Number of classes = 43
 </pre>
 </div>
 </div>
@@ -11936,7 +11936,7 @@ Number of classes = 12630
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[309]:</div>
+<div class="prompt input_prompt">In&nbsp;[367]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Data exploration visualization code goes here.</span>
@@ -11947,12 +11947,11 @@ Number of classes = 12630
 <span class="c1"># Visualizations will be shown in the notebook.</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">))</span>
-<span class="n">image</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -11964,95 +11963,97 @@ Number of classes = 12630
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[309]:</div>
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.image.AxesImage at 0x15f67af28&gt;</pre>
-</div>
-
-</div>
-
-<div class="output_area">
 <div class="prompt"></div>
 
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAABZCAYAAABR/liSAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
-AAALEgAACxIB0t1+/AAAD8FJREFUeJztnF2MJNdVx3+nqrqme3o+dte7dpzYsQOJFTkJGHASEQsF
-5UsJEnIiRMBICOQI5yUSiXhIBC88RCgPwAtBJkYE8YAEiCASRUGxExmSyAitbZngjyR2YvyVZT/s
-3Z2ZnumuqnsPD+fc6l57dre9symvvH2kUU1X3bp169xzz8f/nFuiqiyoG8pe6QFcTrRgdoe0YHaH
-tGB2h7Rgdoe0YHaHtGB2h7QnZovIB0Xk+yLyhIh85mIN6tVKcqFBjYjkwA+A9wPPAoeB21T10Ys3
-vFcXFXu49x3AE6r6IwAR+QfgVuCszC7LUvv9ASAg6az9I5kdcxRibZc02gFoov2f56UNvMgBCDES
-o3o7aY9Zu2jtmoj9jqooesY1dhW4dJ8g4mP0Zu3zRFANTMZj6rqWXTo5g/bC7NcBz8z8fhZ454sb
-icgdwB0AS/0+b3/nLYgUqL+AOtP6Sz0A1qVGR0fs5rgDQBPh2NYYgH1XvBaAK9YPALC5s8Wosomo
-ovVZa8kgX7YXDAGArG+TtF03hKaxsWFHVTvGGG2yAXXOZr2CQWET1bNmbOzYtdATQr3FQ/c/MBfD
-9sLs3WbyJSKiqncBdwGsr69r0YOlXkGeG5Mbl5Lc22eSEzL75YINMjUuTW1vfHp7G4BxNWE8tnOT
-xvqq4oRGbHWUzjSfN4JA09Q+Njtmhb1KLy8oC2eJC0OjgboZ+zBWfBQ2kSuDnI3qFPLS196V9sLs
-Z4FrZ35fA/z4XDfkRcb+A0sUIkh0MfElLP7i0lQEZ1Ra7oK0zA6NzcC2Mz1ExTUQeXtUovff4DPm
-1xQhTypFluxSbr/X1/useGfbO5O2/8onMTD2PqzPzZNjVHeRsLPQXryRw8CbROQNIlICvwl8ZQ/9
-verpgiVbVRsR+QTwdUwLfFFVHznnPU1F9fwzVBpaHeSrlSzpSKaikiQ2qCLJiLnakSSwOm2YZXay
-h5C8rMwfUAXXyyrkrqaKvA9Av1f6+LbZrE1668baRDI0RB+HSXtMtiREM7x6Xttoz5ur1VlIVb8G
-fG0vfVxOtCdmv1zKVOlXDSpK7l5IkkB1127W79cZG5xxpvtVujRPFKq2lXk0EkIr0epWtgnWKisK
-NJqHIt5ntW0SOx7tAO69ZFPWxHY1uQF2b6ZG0BCJrSU/z/vP1WpBF4U6leyoUIVIr5eT5jlP3oLr
-0aDaSmOruxFySUGP3beU29CLItCMTDJ3apPKqqrJ8+jXrX3y48myVqLVJTW4L45m5L3k+tn9dd20
-Olkba9cGNTGSSbarD7wbdcpsVWXSRFSEgbtbrY+alirKNKr0GyMts4v0Zs6gfr9H7Lsxc0PWH76J
-tbU3ArC9/X0AJjtP+W2R2lVVdCbGZDxDIFZuWFujK61L2bqp/jMHYgy7B6C70EKNdEjdSjZQx0hJ
-TtIRIamMZCCFNpRPeIZkkLt4BV8BEzdSzSTS1C4zwY5X7ruRd7/lowA8cfjzADzJDwE4rkqeZDNZ
-2xRlIlO4JKY2GVGDj9/bJTWiSpZlrft6PlpIdofUqWQjkPUyokY0utSmMDq5aghJK+pMsJC5lAeX
-ssrDdYmK1u78uc7efOHb3HrzLwHQu+oKAP7oH12yw36qZghA5EXuJx5UMXVFG526kTA7RkACeTGv
-eeyY2XkmrPQLtI5Tj6NFFqaDFjlzwalqOystE9wzyCP03WevRxsAjEaP8a0fGyr4ods+BMA1GzcA
-8B//+jg9NSAp80nKEgwmUyg38TdvfRdQH1didpYpyS+fhxZqpEPqVLIFKFAoZLpcmS7h2XZAC9pH
-VYrS/OTajWG7tINSTVyNTKyXXhzy6S98FYC7Bwax/9rtXwLge9Vf8sBXvwzAmkt0LoX3XdO0WI27
-mmirZppkPEkqDQopdgebd6GFZHdI3RpIIMszROMMUub6r8UyFFJUqckFhFg70O+iN1wyLLquAiPP
-4gyG+wA4eNX1nDxu2Z7Df/s4AO/XAQDv6/0UWyuG8p3YcpcuRap5ThFTNJkCH22xj5jw9UzaJnXV
-MCc0spDsLqlzyY4xgmobfs+6XeBy3v6YhvBlQgk9rxq3LC2Wq7Q4yXDVJDv0Vrh29aD9v/kQABv/
-9ikAPvgLV/Po0NzGU1t2HIepbUhIR8JLAibxAHnmGR6Xfo2BoApz5mo6Z3ZSG/HMn9N890yiYBZs
-9aCNlHYYrFg+cHNri+DMyPp2LitXKEtTO9WSMfvoNfb7gUN9bn7XWwE49mVL1D7tnZ+OsfX58sIM
-cpZliDNZ8jQp1ldshNAsXL9LkjpG/QzWVGhTU5lLTYucxYhypuGSrIc4mC+5SdzWjrl7W5PA+oH9
-AJRDC1Y0g7U1k/JjozUAvnD4WQB+612389l3vx2A/Sc/C8BffONuADa4kqApgz6l3A1i4xFqsqGC
-kOd566KejxaS3SF1G9QISJYTmqYNh+smIWpJeYe2jiPp56qC3IcaPBDZ9LqRsr/CvgNmDDPXqSra
-YtarV1wHwJXHbEV8486v875PvhmAN37sIwC8fvxdAB79zjaDaCuh8PvrEGgc725lU31VSgDROc3j
-Hmr9LoT2rw71PTffiGokpqjM12SIKQsS23OTFu7skfsL4gBWUVhmfH3/a+gP7f9yYBNinvoUBgXI
-PMo8fuQErJjX8o4PvAeAat1Uxz3fvJvRDw2wKtuM+lSNtBmepEZEkQx+8L1H2d4enVeXLNRIh9Sp
-GmlC5PjJMVku5J4Wa7E/N5RZXiCeByyTUYw5A0fcxtsjYJp0yPNe635NxhZJFmXJ6ZHVdox2rN2B
-/ioAw5WC45unAHju4XUAbnzDzwDw5tF9POUc2WxSpRaI+tjSWJPGU50mGeaghWR3SN3WjeQFy2v7
-6ZUDKq88StnUsWPLtcymn6xJP8vQ4OccG+kPDBvpl8pox6R4Mkr1fSMqz46HVEtSuNs2KSgza19s
-GDL43v3PA/C2t1V8/ltHAdh0FzCn31ZmSWveUjnx1DbM9f7nayAi14rIvSLymIg8IiK/7+cPiMg9
-IvK4H/fP/dTLlOaR7Ab4A1V9UERWgQdE5B7gd4FvqurnfIvHZ4BPn6ujqLAdBHZim41pPHEbfSgi
-ICn7EZKkVpwam+SXpenepQOWiTlVbbDpFU15YW7bwUP7eP6kSah6JdTG1km7X3tItFVV5f8JwPbP
-HgLg0C3X8Zpj1sdzD459XMOpF9ImiBMaKUicE/JjDmar6hHgiP+/KSKPYYXwtwK/7M3+Dvh3zsds
-YEJk32rJZGz4Qu25xFSkkyNt0WTu79ZUE3qlwaLlqrl5Y28kvT6lQ6YpFXnihf8jE5sAQipqN7WT
-FwXLwSLNR560NrffeRiAj3/qT/jAb9wCwMkXPCv/1DNEsf5jqzGmRURZlv1kkgcicj3wc8B/AVf5
-RKQJufIs99whIveLyP2NY9KXK81tIEVkBfgS8ElV3ZgXD5jdeTBcWdEGpW526C95+VmR0l1T9CzP
-7FyvMImqYkC9uL1XJMNnx0xK1lYsWz7atKU/XF6marwkbewSnpubJ72cYmiq6JqhuXwP/8ja3PtX
-T/J7H/5VAG56688DcOTYM4zGqUoq7YhIhZlzC7XdP08jEelhjP57Vf0XP31URK7261cDx17Gcy9L
-Oq9ki4nw3wCPqeqfz1z6CvA7wOf8+OXz9aVAFGiCsto3HbrP0bnRyKRyZ6dqEws90oakgiXX2cse
-nIzbWkGItUlm6UWUhQhLK1f4G9qKqCoPfGKgJ75pCkuVvWXZt3b89z9zX/E0AIMD9rzVtevZrk2O
-NPhWFFKhfY5INlPscG6aR43cAvw28D8i8pCf+0OMyf8kIh8DngZ+fa4nXsY0jzfyHc6umt77ch4m
-Ylss8rzXhumbHn43MYE9irqkjrwUuMyHHFo3+9tzHd+ThC2P2yL1zLdtFKoE30G24rF1426bNk2L
-IPqOPOqJp9gGp3n8+fsBeO3SLwJw9errGZ+y8P5UcP2fTVNnpW8RmYc6h1h7pRJ1QuX1H3W7YdSG
-kgUIDp+K+3KxVo4+Y+eSYRSvt24mO+QhRXR2TjW0O7pmoz37mfPi8raUrBgxhoEx9HU3mJq7oXeQ
-0fOmbjYbG0OCQzIgz7NF8uBSpG6xEYHlUpA60NQpe+07DlwCy7ygdFdusmltxlWNeNVSdCmq3WeX
-rKCX6jiS7EgxlbZUs5eCpixvC9173qbvx1VRjntgdN+37wVgWFcEdRwnJX5TeXOINBKYNyewkOwO
-qfNtHvW4oZSC6Dt1G5/uyt2qACw5jt1b8URuXrb1eMHdtiab7gHJYsqqpDIJnTHpJnWFlzusra4y
-HNjKKX1VlTumi0+eOsrmxHT2yYlJ87gJ5Gmvd8r6OJaeYdjOvJLd7QamCJNxoJ7xTGPCODzXFFSZ
-JJAqRWxFznBoANFwkGpD3CvJza8GKNpNTflLvryQCmtgmpQoohdUeqIg9nqEnU0AcklfhIiWrofp
-RibvJyAzlvf8tFAjHVL3FVEKFFkrTa2P7JeDRhpPKBTu3mWDJULpOw2WDfhf6tvQB+U+irbmxNpk
-MlUjCamLnkQgRoLjJdub5uMn4dyJ08or0bRakg6ZJo/jSyq25qOFZHdInUt2QIghIpIQtCRKdsgE
-lkob1r61oZ8saMQN1sRSWMdPmA4+eOBGVpetXS9zZFCmHwqIHug0rnfrumLrmGEd1YZHqMvLPrZZ
-TZ9cR2H2qzow85GCLCfEM7d9n4sWkt0hdb4PMkiGNrHd5tEWwc9ur3DJqTwVJkVE+iah48qOS33z
-TkKEYydO2LWRpb4k1G0Ka7BqOPaSY9hlscSBfZZSazKHBQaGqRw7vZkSO60bCVP8ul19KbjJxCt2
-LkHXD8QiwQzbfcA0kx5mPr6V3rh2phdZRpGnEl5jcp4bXqF5j8a/cENpeEaMwrA0NbXkb3j6ZILb
-S5bWDp3Rvi0HP8ON81qRTFrspHUffSJygbyXz2zdOzct1EiH1Gmtn4gcB0bAic4eeuF0kPnHeZ2q
-Hjpfo06ZDSAi96vqzZ0+9ALoJzHOhRrpkBbM7pBeCWbf9Qo880Looo+zc519OdNCjXRInTH7Uv7W
-9jkqdf9YRJ4TkYf871f29Jwu1Mil/q1tr+i6erZSF/gw8FFgS1X/9GI8pyvJbr+1raoVkL61fUmQ
-qh5R1Qf9/00gVepeVOqK2bt9a/uiv8zFoBdV6gJ8QkS+KyJf3GvBf1fM3g2pueTcoBdX6gJ3Aj8N
-3ITVqP/ZXvrvitkv+1vbXdNulbqqelRVg9oHrf4aU4cXTF0x+5L+1vbZKnVTSbTTR4CH9/KcTvDs
-C/nWdsd0tkrd20TkJkzl/S/w8b08ZBFBdkiLCLJDWjC7Q1owu0NaMLtDWjC7Q1owu0NaMLtDWjC7
-Q/p/l+DC0OpBQqkAAAAASUVORK5CYII=
+<img src="data:image/png;base64,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
+mBpxcgAAAABJRU5ErkJggg==
 "
 >
 </div>
@@ -12162,30 +12163,30 @@ Q/p/l+DC0OpBQqkAAAAASUVORK5CYII=
 
 <span class="k">def</span> <span class="nf">LeNet</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">conv1_W</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>    
     <span class="n">conv1_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+    
+    <span class="c1">#1st layer conv Input = 32x32x3 Output = 28x28x6</span>
     <span class="n">conv1</span>   <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">conv1_W</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">conv1_b</span>
 
-    <span class="c1"># SOLUTION: Activation.</span>
     <span class="n">conv1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">conv1</span><span class="p">)</span>
 
-    <span class="c1"># SOLUTION: Pooling. Input = 28x28x6. Output = 14x14x6.</span>
+    <span class="c1"># Avg Pooling. Input = 28x28x6. Output = 14x14x6.</span>
     <span class="n">conv1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span>
 
-    <span class="c1"># SOLUTION: Layer 2: Convolutional. Output = 12x12x16.</span>
+    <span class="c1">#Layer 2: Convolutional. Output = 12x12x16.</span>
     <span class="n">conv2_W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">mu</span><span class="p">,</span> <span class="n">stddev</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">))</span>
     <span class="n">conv2_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
     <span class="n">conv2</span>   <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="n">conv2_W</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">conv2_b</span>
     
-    <span class="c1"># SOLUTION: Activation.</span>
+    <span class="c1">#Activation.</span>
     <span class="n">conv2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">conv2</span><span class="p">)</span>
 
-    <span class="c1"># SOLUTION: Pooling. Input = 12x12x16. Output = 6x6x16.</span>
+    <span class="c1">#Avg Pooling. Input = 12x12x16. Output = 6x6x16.</span>
     <span class="n">conv2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">conv2</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span>
 
-    <span class="c1"># SOLUTION: Flatten. Input = 5x5x16. Output = 400.</span>
+    <span class="c1">#Flatten. Input = 6x6x16. Output = 576.</span>
     <span class="n">fc0</span>   <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">conv2</span><span class="p">)</span>
     
-    <span class="c1"># SOLUTION: Layer 3: Fully Connected. Input = 400. Output = 120.</span>
-    
+    <span class="c1">#Flat Neural Network</span>
     <span class="n">fc1</span> <span class="o">=</span> <span class="n">flat_layer_with_activation</span><span class="p">(</span><span class="mi">576</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">fc0</span><span class="p">,</span>  <span class="kc">False</span><span class="p">)</span>
     <span class="n">fc2</span> <span class="o">=</span> <span class="n">flat_layer_with_activation</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">fc1</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">fc3</span> <span class="o">=</span> <span class="n">flat_layer_with_activation</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">fc2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -12368,6 +12369,80 @@ EPOCH 15 ...
 Validation Accuracy = 0.932
 
 Model saved
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[371]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
+
+<span class="c1"># Launch the graph</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="s1">&#39;./lenet&#39;</span><span class="p">)</span>
+
+    <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test Accuracy: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_accuracy</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Test Accuracy: 0.9094220111224732
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[373]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
+
+<span class="c1"># Launch the graph</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="s1">&#39;./lenet&#39;</span><span class="p">)</span>
+
+    <span class="n">train_accuracy</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Train Accuracy: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_accuracy</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Train Accuracy: 0.9941090261214403
 </pre>
 </div>
 </div>
